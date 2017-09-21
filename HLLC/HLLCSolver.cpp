@@ -20,8 +20,8 @@ riemann::Vec3 HLLCSolver::CalculateFlux(int i) const
 	//********************************************//
 
 	// ********** wave speed estimates ************** //
-	auto const q_l = P_star <= P_l ? 1 : sqrt( 1 + (m_gamma + 1) / (2 * m_gamma) * P_star / P_l- 1);
-	auto const q_r = P_star <= P_r ? 1 : sqrt( 1 + (m_gamma + 1) / (2 * m_gamma) * P_star / P_r - 1);
+	auto const q_l = P_star <= P_l ? 1 : sqrt( 1 + (m_gamma + 1) / (2 * m_gamma) * (P_star / P_l- 1));
+	auto const q_r = P_star <= P_r ? 1 : sqrt( 1 + (m_gamma + 1) / (2 * m_gamma) * (P_star / P_r - 1));
 
 	auto const S_l = u_l - c_l * q_l;
 	auto const S_r = u_r + c_r * q_r;
