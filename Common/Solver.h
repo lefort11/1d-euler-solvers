@@ -6,6 +6,8 @@
 #include "../Maths/Algebra.h"
 #include "SpaceMesh.h"
 
+using namespace riemann;
+
 
 
 /************************************************************************************************/
@@ -21,6 +23,8 @@ protected:
 	unsigned m_Nx;
 
 	double m_hx;
+
+	double m_delta_t = 0.0;
 
 
 
@@ -69,6 +73,23 @@ private:
 protected:
 
 
+	template<typename T>
+	Vec3 RungeKuttaTVDStep(Vec3 const& current_q, T const& f) const
+	{
+
+		auto const q_1 = current_q + m_delta_t * f(current_q);
+
+		//	auto const q_2 = 3.0/4.0 * current_q + 1.0/4.0 * q_1 + 1.0/4.0 * m_delta_t * f(q_1);
+
+		//	auto const next_q = 1.0/3.0 * current_q + 2.0/3.0 * q_2 + 2.0/3.0 * m_delta_t * f(q_2);
+
+		//	return next_q;
+
+		return q_1;
+
+	}
+
+
 	//!@brief Gets left and right values
 	//!@param ro_l left density @param ro_l right density @param u_l left velocity @param u_r right velocity
 	//!@param P_l left pressure P_r right pressure
@@ -88,12 +109,12 @@ protected:
 
 
 	//!@brief Calculates next time step according to Courant criteria
-	virtual double CalculateTimeStep() const
+	void CalculateTimeStep()
 	{
 		auto lambda_max = 0.0;
 		for(int i = 0; i < m_Nx; ++i)
 		{
-			auto c0 = sqrt(m_gamma * m_currentState[i].pressure / m_currentState[i].density);
+			auto c0 = std::sqrt(m_gamma * m_currentState[i].pressure / m_currentState[i].density);
 
 			if(fabs(m_currentState[i].velocity + c0) > lambda_max)
 				lambda_max = fabs(m_currentState[i].velocity + c0);
@@ -104,7 +125,7 @@ protected:
 
 		double const sigma = 0.1;
 
-		return sigma * m_hx / lambda_max;
+		m_delta_t = sigma * m_hx / lambda_max;
 
 //		double const phi = 1.0/3.0;
 
@@ -121,7 +142,6 @@ public:
 												   	m_W_Initial(w0),
 													m_currentState(Nx)
 	{
-		assert(m_W_Initial.size() == Nx);
 
 	}
 

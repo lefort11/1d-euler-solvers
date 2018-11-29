@@ -40,13 +40,13 @@ void NumericalSolver::Calculate(double time)
 
 
 	auto currentTime = 0.0;
-	auto tau = CalculateTimeStep();
+	CalculateTimeStep();
 
-	if(tau > time)
-		tau = time;
-	currentTime += tau;
+	if(m_delta_t > time)
+		m_delta_t = time;
+	currentTime += m_delta_t;
 
-	while( (tau != 0) )
+	while( (m_delta_t != 0) )
 	{
 
 		//calculating q^{n+1} vectors for each x_i
@@ -57,7 +57,7 @@ void NumericalSolver::Calculate(double time)
 			riemann::Vec3 leftFlux = CalculateFlux(i-1);
 			riemann::Vec3 rightFlux = CalculateFlux(i);
 
-			nextQ[i] = currentQ[i] - tau / m_hx * (rightFlux - leftFlux);
+			nextQ[i] = currentQ[i] - m_delta_t / m_hx * (rightFlux - leftFlux);
 		}
 
 		//filling solution here
@@ -74,10 +74,10 @@ void NumericalSolver::Calculate(double time)
 			m_currentState[i].pressure = (m_gamma - 1.0) * epsilon * m_currentState[i].density;
 		}
 
-		tau = CalculateTimeStep();
-		if(currentTime + tau> time)
-			tau = time - currentTime;
-		currentTime += tau;
+		CalculateTimeStep();
+		if(currentTime + m_delta_t> time)
+			m_delta_t = time - currentTime;
+		currentTime += m_delta_t;
 
 
 		currentQ = nextQ;

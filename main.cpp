@@ -107,10 +107,10 @@ int main(int argc, char** argv)
 
 	RiemannTest* pTest = &test1;
 
-	REOSolver reoSolver(pTest->GetW0(), pTest->leftX, pTest->rightX, pTest->Nx, pTest->gamma);
+//	REOSolver reoSolver(pTest->GetW0(), pTest->leftX, pTest->rightX, pTest->Nx, pTest->gamma);
 //	reoSolver.Calculate(time);
 
-	WENOSolver<HLLCSolver> wenoSolver(pTest->GetW0(), pTest->leftX, pTest->rightX, pTest->Nx, pTest->gamma);
+	REOSolver wenoSolver(pTest->GetW0(), pTest->leftX, pTest->rightX, pTest->Nx, pTest->gamma);
 	wenoSolver.Calculate(time);
 
 	auto solution = wenoSolver.GetSolution();

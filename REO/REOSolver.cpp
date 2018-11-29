@@ -41,6 +41,7 @@ riemann::Vec3 REOSolver::CalculateFlux(int i) const
 
 	CalculateStarComponents(i, ro_l, ro_r, u_l, u_r, P_l, P_r, delta_s, r_star, lambda_star);
 
+
 	std::array<double, 3> lambdas = {
 			std::fmin(lambda_star[0], lambda_i_1),
 			lambda_star[1],
@@ -91,8 +92,8 @@ riemann::Vec3 REOSolver::CalculateFlux(int i) const
 	//-------------------------------------------------------------------------------------------------//
 
 
-	return flux + OsherTerm;
-//	return flux;
+//	return flux + OsherTerm;
+	return flux;
 
 }
 

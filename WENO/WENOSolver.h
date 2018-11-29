@@ -264,9 +264,15 @@ private:
 
 
 
-				auto const w_t_1 = gammas[0] / riemann::sqr(eps + beta_1);
-				auto const w_t_2 = gammas[1] / riemann::sqr(eps + beta_2);
-				auto const w_t_3 = gammas[2] / riemann::sqr(eps + beta_3);
+				//auto const w_t_1 = gammas[0] / riemann::sqr(eps + beta_1);
+				//auto const w_t_2 = gammas[1] / riemann::sqr(eps + beta_2);
+				//auto const w_t_3 = gammas[2] / riemann::sqr(eps + beta_3);
+
+				auto const w_t_1 = gammas[0] * (1 + beta_2) * (1 + beta_3);
+				auto const w_t_2 = gammas[1] * (1 + beta_1) * (1 + beta_3);
+				auto const w_t_3 = gammas[2] * (1 + beta_1) * (1 + beta_2);
+
+
 
 				auto const w_summ = w_t_1 + w_t_2 + w_t_3;
 
@@ -322,9 +328,13 @@ private:
 
 
 
-				auto const w_t_1 = gammas[2] / riemann::sqr(eps + beta_1);
-				auto const w_t_2 = gammas[1] / riemann::sqr(eps + beta_2);
-				auto const w_t_3 = gammas[0] / riemann::sqr(eps + beta_3);
+//				auto const w_t_1 = gammas[2] / riemann::sqr(eps + beta_1);
+//				auto const w_t_2 = gammas[1] / riemann::sqr(eps + beta_2);
+//				auto const w_t_3 = gammas[0] / riemann::sqr(eps + beta_3);
+
+				auto const w_t_1 = gammas[0] * (1 + beta_2) * (1 + beta_3);
+				auto const w_t_2 = gammas[1] * (1 + beta_1) * (1 + beta_3);
+				auto const w_t_3 = gammas[2] * (1 + beta_1) * (1 + beta_2);
 
 				auto const w_summ = w_t_1 + w_t_2 + w_t_3;
 
